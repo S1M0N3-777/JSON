@@ -6,7 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="static/css/index.css">
 </head>
-<body>
+<body class="fading background">
     <div class="container">
         <input type="button" name="start" id="starting" value="Avvia">
         <form action="#"> 
@@ -30,35 +30,36 @@
         let button = document.querySelector("#button")
         let start = document.querySelector("#starting")
         let endgame = document.querySelector(".endgame")
+        let body = document.querySelector("body")
         let quiz = [
             {
                 "ndomanda": "1.",
-                "testo": "in che anno è scoppiata la prima guerra mondiale?",
+                "testo": "In che anno è scoppiata la prima guerra mondiale?",
                 "rispostagiusta": "1915",
                 "rispostautente": "",
             },
             {
                 "ndomanda": "2.",
-                "testo": "chi ha vinto i mondiali nel 2022?",
-                "rispostagiusta": "Argentina",
+                "testo": "Chi ha vinto i mondiali nel 2022?",
+                "rispostagiusta": "argentina",
                 "rispostautente": "",
             },
             {
                 "ndomanda": "3.",
-                "testo": "se Mario ha 3 mele e Frank ne ruba 2, cos'è Frank?",
-                "rispostagiusta": "Un ladro",
+                "testo": "Se Mario ha 3 mele e Frank ne ruba 2, cos'è Frank?",
+                "rispostagiusta": "un ladro",
                 "rispostautente": "",
             },
             {
                 "ndomanda": "4.",
-                "testo": "da che età si può conseguire la patente A?",
+                "testo": "Da che età si può conseguire la patente A?",
                 "rispostagiusta": "14",
                 "rispostautente": "",
             },
             {
                 "ndomanda": "5.",
-                "testo": "oggi piu di ieri (continua la frase)",
-                "rispostagiusta": "Odio i carabinieri",
+                "testo": "Oggi piu di ieri (continua la frase)",
+                "rispostagiusta": "odio i carabinieri",
                 "rispostautente": "",
             },
         ] 
@@ -91,11 +92,16 @@
                 if(obj["rispostautente"] === obj["rispostagiusta"]){
                     console.log("Ok")
                     score += 1
-                    
+                    body.classList.toggle("green")
+                }else{
+                    body.classList.toggle("error")
                 }
+                setTimeout(() => {
+                        body.classList.remove("green", "error")
+                        body.classList.add("background")
+                    }, 800);
                 currentQuestion = currentQuestion + 1
                 if(currentQuestion < quiz.length){
-                    
                     obj = quiz[currentQuestion]
                     ndomanda.innerHTML = obj["ndomanda"]
                     domanda.innerHTML = obj["testo"]
@@ -104,11 +110,6 @@
                 }
             })
         }
-
-
-
-
-
         window.addEventListener("load", function(){
         ndomanda.style.visibility = "hidden"
         domanda.style.visibility = "hidden"
