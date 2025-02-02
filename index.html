@@ -107,7 +107,8 @@
                     domanda.innerHTML = obj["testo"]
                 }else{
                     fine()
-                }
+                    button.disabled = true
+             }
             })
         }
         window.addEventListener("load", function(){
@@ -116,6 +117,7 @@
         input.style.visibility = "hidden"
         button.style.visibility = "hidden"
         start.addEventListener("click", avvia)
+        
         })
 
 
