@@ -4,80 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="static/css/index.css">
 </head>
 <body>
     <div class="container">
-        <form action="#">
-            <span class="question-number">1</span>
-            <span class="question-text">aaaa</span>
+        <input type="button" name="start" id="starting" value="Avvia">
+        <form action="#"> 
+            <span class="question-number"></span>
+            <span class="question-text"></span>
+            <div class="input-group">
             <input type="text" name="answer" id="user-guess">
             <input type="submit" name="" id="button">
-            <h1 class="endgame"></h1>
+            </div>
         </form>
+        <h1 class="endgame"></h1>
     </div>
     <script>
-        let score = 0;
+        let score = 0
+        let bool = false
+        let rispostautente
+        let currentQuestion = 0;
+        let ndomanda = document.querySelector(".question-number")
+        let domanda = document.querySelector(".question-text")
+        let input = document.querySelector("[name=answer]")
+        let button = document.querySelector("#button")
+        let start = document.querySelector("#starting")
+        let endgame = document.querySelector(".endgame")
         let quiz = [
             {
-                "ndomanda": "1",
-                "testo": "In che anno è scoppiata la prima guerra mondiale?",
+                "ndomanda": "1.",
+                "testo": "in che anno è scoppiata la prima guerra mondiale?",
                 "rispostagiusta": "1915",
                 "rispostautente": "",
             },
             {
-                "ndomanda": "2",
-                "testo": "Chi ha vinto i mondiali nel 2022?",
+                "ndomanda": "2.",
+                "testo": "chi ha vinto i mondiali nel 2022?",
                 "rispostagiusta": "Argentina",
                 "rispostautente": "",
             },
             {
-                "ndomanda": "3",
-                "testo": "Se Mario ha 3 mele e Frank ne ruba 2, cos'è Frank?",
+                "ndomanda": "3.",
+                "testo": "se Mario ha 3 mele e Frank ne ruba 2, cos'è Frank?",
                 "rispostagiusta": "Un ladro",
                 "rispostautente": "",
             },
             {
-                "ndomanda": "4",
-                "testo": "Da che età si può conseguire la patente A?",
+                "ndomanda": "4.",
+                "testo": "da che età si può conseguire la patente A?",
                 "rispostagiusta": "14",
                 "rispostautente": "",
             },
             {
-                "ndomanda": "5",
-                "testo": "Oggi piu di ieri (continua la frase)",
+                "ndomanda": "5.",
+                "testo": "oggi piu di ieri (continua la frase)",
                 "rispostagiusta": "Odio i carabinieri",
                 "rispostautente": "",
             },
         ] 
-        window.addEventListener("load", function(){
-            let currentQuestion = 0;
-            let ndomanda = document.querySelector(".question-number")
-            let domanda = document.querySelector(".question-text")
+        
+        let form = document.querySelector("form")
+        
+        function sanitize(input){
+            return input.trim().toLowerCase()
+        }
+
+        function fine(){
+            endgame.innerHTML = "Gioco Terminato hai totalizzato " + score + " punti!"
+        }
+
+        function avvia(){
+            start.style.visibility = "hidden"
+            ndomanda.style.visibility = "visible"
+            domanda.style.visibility = "visible"
+            input.style.visibility = "visible"
+            button.style.visibility = "visible"
             let obj = quiz[currentQuestion]
             ndomanda.innerHTML = obj["ndomanda"]
             domanda.innerHTML = obj["testo"]
-            let form = document.querySelector("form")
-            form.addEventListener("submit", function (e){
+            // ------------------------------------
+            form.addEventListener("submit" , function(e){
                 e.preventDefault()
-                let rispostautente = document.querySelector("#user-guess")
-                obj["rispostautente"] = rispostautente.value.trim();
-                currentQuestion += 1
-                while(rispostautente === "" || isNaN(rispostautente)){
-                    alert("inserisci una risposta valida!")
-                }if(rispostautente === obj[currentQuestion].rispostagiusta.toLowercase()){
-                        score += 1
-                    }
+                input = document.querySelector("[name=answer]").value
+                input = sanitize(input)
+                obj["rispostautente"] = input
+                if(obj["rispostautente"] === obj["rispostagiusta"]){
+                    console.log("Ok")
+                    score += 1
+                    
+                }
+                currentQuestion = currentQuestion + 1
                 if(currentQuestion < quiz.length){
+                    
                     obj = quiz[currentQuestion]
                     ndomanda.innerHTML = obj["ndomanda"]
                     domanda.innerHTML = obj["testo"]
                 }else{
-                    calcolapunteggio()
+                    fine()
                 }
             })
+        }
 
 
+
+
+
+        window.addEventListener("load", function(){
+        ndomanda.style.visibility = "hidden"
+        domanda.style.visibility = "hidden"
+        input.style.visibility = "hidden"
+        button.style.visibility = "hidden"
+        start.addEventListener("click", avvia)
         })
+
+
+
     </script>
 </body>
 </html>
