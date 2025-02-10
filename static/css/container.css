@@ -51,6 +51,10 @@ body{
     margin-top: 35px;
 }
 
+.errors{
+    margin-top: 15px;
+}
+
 #starting{
     margin-top: 35px;
     width: 100%;

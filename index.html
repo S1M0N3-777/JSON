@@ -18,6 +18,8 @@
             </div>
         </form>
         <h1 class="endgame"></h1>
+        <div class="errors">
+        </div>
     </div>
     <script>
         let score = 0
@@ -31,6 +33,8 @@
         let start = document.querySelector("#starting")
         let endgame = document.querySelector(".endgame")
         let body = document.querySelector("body")
+        let incorrect = []
+        let errors = document.querySelector(".errors")
         let quiz = [
             {
                 "ndomanda": "1.",
@@ -72,8 +76,11 @@
 
         function fine(){
             endgame.innerHTML = "Gioco Terminato hai totalizzato " + score + " punti!"
-        }
-
+            for(let i=0; i<incorrect.length; i++){
+                errors.innerHTML += "Numero Domdanda: " + incorrect[i].ndomanda + " " + "Risposta Inserita: " 
+                + incorrect[i].rispostautente + " Risposta corretta: " + incorrect[i].rispostagiusta + "<br>"
+            }
+           }
         function avvia(){
             start.style.visibility = "hidden"
             ndomanda.style.visibility = "visible"
@@ -86,15 +93,19 @@
             // ------------------------------------
             form.addEventListener("submit" , function(e){
                 e.preventDefault()
-                input = document.querySelector("[name=answer]").value
-                input = sanitize(input)
-                obj["rispostautente"] = input
+                input = document.querySelector("#user-guess")
+                let risutente = sanitize(input.value)
+                console.log
+                obj["rispostautente"] = risutente
+                input.value = ""
                 if(obj["rispostautente"] === obj["rispostagiusta"]){
                     console.log("Ok")
                     score += 1
                     body.classList.toggle("green")
                 }else{
                     body.classList.toggle("error")
+                    incorrect.push(quiz[currentQuestion])
+
                 }
                 setTimeout(() => {
                         body.classList.remove("green", "error")
